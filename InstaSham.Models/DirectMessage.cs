@@ -18,4 +18,6 @@ public partial class DirectMessage
     public virtual User ReceiverNavigation { get; set; } = null!;
 
     public virtual User SenderNavigation { get; set; } = null!;
+    public virtual ICollection<DirectMessage> DirectMessages { get; set; } = new List<DirectMessage>();
+
 }

@@ -18,4 +18,5 @@ public partial class Comment
     public virtual Post Post { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }
