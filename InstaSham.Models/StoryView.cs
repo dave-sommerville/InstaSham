@@ -14,4 +14,5 @@ public partial class StoryView
     public DateTime CreatedAt { get; set; }
 
     public virtual User User { get; set; } = null!;
+    public virtual ICollection<StoryView> StoryViews { get; set; } = new List<StoryView>();
 }

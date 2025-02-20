@@ -16,4 +16,5 @@ public partial class Story
     public DateTime CreatedAt { get; set; }
 
     public virtual User User { get; set; } = null!;
+    public virtual ICollection<Story> Stories { get; set; } = new List<Story>();
 }

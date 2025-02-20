@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InstaSham.Models;
 
 namespace InstaSham.DAL
 {
-    class UserRepository
+    public class UserRepository
     {
+        private readonly InstaShamContext _context;
+        public UserRepository(InstaShamContext context)
+        {
+            _context = context;
+        }
+        public List<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
+        public void AddUser(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+        }
     }
 }

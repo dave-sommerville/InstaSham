@@ -34,4 +34,5 @@ public partial class User
     public virtual ICollection<Story> Stories { get; set; } = new List<Story>();
 
     public virtual ICollection<StoryView> StoryViews { get; set; } = new List<StoryView>();
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }
