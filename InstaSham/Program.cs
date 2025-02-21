@@ -16,6 +16,7 @@ namespace InstaSham
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+            builder.Services.AddTransient<CommentRepository>();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

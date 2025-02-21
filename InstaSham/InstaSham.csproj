@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\DirectMessage\" />
+    <Folder Include="Views\StoryLike\" />
     <Folder Include="Views\User\" />
     <Folder Include="Views\Story\" />
     <Folder Include="Views\Post\" />

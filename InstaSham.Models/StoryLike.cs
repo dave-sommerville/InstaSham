@@ -18,4 +18,5 @@ public partial class StoryLike
     public virtual Post Story { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
+    public virtual ICollection<StoryLike> StoryLikes { get; set; } = new List<StoryLike>();
 }
