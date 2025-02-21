@@ -33,6 +33,11 @@ public partial class User
 
     public virtual ICollection<Story> Stories { get; set; } = new List<Story>();
 
+    public virtual ICollection<StoryLike> StoryLikes { get; set; } = new List<StoryLike>();
+
     public virtual ICollection<StoryView> StoryViews { get; set; } = new List<StoryView>();
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+
+    public virtual ICollection<User> Followers { get; set; } = new List<User>();
+
+    public virtual ICollection<User> Followings { get; set; } = new List<User>();
 }

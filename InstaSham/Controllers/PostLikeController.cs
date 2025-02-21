@@ -14,7 +14,7 @@ namespace InstaSham.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<PostLike> postLikes = _postLikeService.GetPostlikes();
+            List<PostLike> postLikes = _postLikeService.GetPostLikes();
             return View(postLikes);
         }
         [HttpGet]

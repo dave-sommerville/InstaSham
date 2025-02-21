@@ -14,7 +14,7 @@ namespace InstaSham.BLL
         {
             return _storyViewRepository.GetAllStoryViews();
         }
-        public void AddPost(StoryView storyView)
+        public void AddStoryView(StoryView storyView)
         {
 
         }

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using InstaSham.Models;
 
-namespace InstaSham.Models;
+namespace InstaSham.DAL;
 
 public partial class InstaShamContext : DbContext
 {
@@ -25,13 +26,15 @@ public partial class InstaShamContext : DbContext
 
     public virtual DbSet<Story> Stories { get; set; }
 
+    public virtual DbSet<StoryLike> StoryLikes { get; set; }
+
     public virtual DbSet<StoryView> StoryViews { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-IOE0U3K\\SQLEXPRESS;Database=InstaSham;Integrated Security=True; TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-IOE0U3K\\SQLEXPRESS;Database=InstaSham;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -166,21 +169,50 @@ public partial class InstaShamContext : DbContext
                 .HasConstraintName("FK__Story__userId__4D94879B");
         });
 
-        modelBuilder.Entity<StoryView>(entity =>
+        modelBuilder.Entity<StoryLike>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__StoryVie__3214EC0769F152CC");
+            entity.HasKey(e => e.Id).HasName("PK__StoryLik__3214EC07EB6782F4");
 
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
+            entity.Property(e => e.IsLiked).HasColumnName("is_liked");
+            entity.Property(e => e.StoryId).HasColumnName("storyId");
+            entity.Property(e => e.UserId).HasColumnName("userId");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.StoryLikes)
+                .HasForeignKey(d => d.StoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__StoryLike__story__6477ECF3");
+
+            entity.HasOne(d => d.User).WithMany(p => p.StoryLikes)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__StoryLike__userI__656C112C");
+        });
+
+        modelBuilder.Entity<StoryView>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__StoryVie__3214EC07AFD47C54");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.StoryId).HasColumnName("storyId");
             entity.Property(e => e.UserId).HasColumnName("userId");
             entity.Property(e => e.Viewed).HasColumnName("viewed");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.StoryViews)
+                .HasForeignKey(d => d.StoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__StoryView__story__5812160E");
 
             entity.HasOne(d => d.User).WithMany(p => p.StoryViews)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__StoryView__userI__52593CB8");
+                .HasConstraintName("FK__StoryView__userI__571DF1D5");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -215,6 +247,40 @@ public partial class InstaShamContext : DbContext
                 .HasMaxLength(55)
                 .IsUnicode(false)
                 .HasColumnName("username");
+
+            entity.HasMany(d => d.Followers).WithMany(p => p.Followings)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Follow",
+                    r => r.HasOne<User>().WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Follows__Followe__5EBF139D"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Follows__Followi__5FB337D6"),
+                    j =>
+                    {
+                        j.HasKey("FollowerId", "FollowingId").HasName("PK__Follows__79CB0335F4981B5D");
+                        j.ToTable("Follows");
+                    });
+
+            entity.HasMany(d => d.Followings).WithMany(p => p.Followers)
+                .UsingEntity<Dictionary<string, object>>(
+                    "Follow",
+                    r => r.HasOne<User>().WithMany()
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Follows__Followi__5FB337D6"),
+                    l => l.HasOne<User>().WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK__Follows__Followe__5EBF139D"),
+                    j =>
+                    {
+                        j.HasKey("FollowerId", "FollowingId").HasName("PK__Follows__79CB0335F4981B5D");
+                        j.ToTable("Follows");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);

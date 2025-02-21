@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InstaSham.Models;
+﻿using InstaSham.Models;
 
 namespace InstaSham.DAL
 {
@@ -20,7 +15,7 @@ namespace InstaSham.DAL
         }
         public void AddPostLike(PostLike postLike)
         {
-            _context.Posts.Add(postLike);
+            _context.PostLikes.Add(postLike);
             _context.SaveChanges();
         }
     }
