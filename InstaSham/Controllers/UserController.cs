@@ -29,7 +29,12 @@ namespace InstaSham.Controllers
             {
                 User newUser = new User
                 {
-                    // Add properties here 
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Username = user.Username,
+                    UserPassword = user.UserPassword,
+                    Bio = user.Bio,
+                    ProfilePicture = user.ProfilePicture
                 };
                 _userService.AddUser(newUser);
                 return RedirectToAction("Index");

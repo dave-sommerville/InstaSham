@@ -1,0 +1,64 @@
+﻿@model InstaSham.Models.User
+
+<h2>User Details</h2>
+<table class="table">
+	<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Bio</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@Model.FirstName</td>
+		</tr>
+	</tbody>
+</table>
+<h3>Followers</h3>
+@if (Model.Followers.Any())
+{
+	<ul>
+		@foreach (var follower in Model.Followers)
+		{
+			<li>@follower.LastName</li>
+		}
+	</ul>
+}
+else
+{
+	<p>No followers yet.</p>
+}
+
+<h3>Following</h3>
+@if (Model.Followings.Any())
+{
+	<ul>
+		@foreach (var followings in Model.Followings)
+		{
+			<li>@followings.LastName</li>
+		}
+	</ul>
+}
+else
+{
+	<p>No following yet.</p>
+}
+<h3>Posts</h3>
+@if (Model.Posts.Any())
+{
+	<ul>
+		@foreach (var post in Model.Posts)
+		{
+			<li>
+				<strong>@post.Content</strong> (Posted on: @post.CreatedAt.ToString("yyyy-MM-dd"))
+			</li>
+		}
+	</ul>
+}
+else
+{
+	<p>No posts</p>
+}

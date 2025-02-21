@@ -1,0 +1,40 @@
+﻿@model InstaSham.Models.User
+<h2>Create User</h2>
+<form asp-action="Create">
+	<div>
+		<label asp-for="FirstName"></label>
+		<input asp-for="FirstName" />
+		<span asp-validation-for="FirstName" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="LastName"></label>
+		<input asp-for="LastName" />
+		<span asp-validation-for="LastName" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Username"></label>
+		<input asp-for="Username" />
+		<span asp-validation-for="Username" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Bio"></label>
+		<input asp-for="Bio" />
+		<span asp-validation-for="Bio" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="Email"></label>
+		<input asp-for="Email" />
+		<span asp-validation-for="Email" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="UserPassword"></label>
+		<input asp-for="UserPassword" />
+		<span asp-validation-for="UserPassword" class="text-danger"></span>
+	</div>
+	<div>
+		<label asp-for="ProfilePicture"></label>
+		<input asp-for="ProfilePicture" />
+		<span asp-validation-for="ProfilePicture" class="text-danger"></span>
+	</div>
+	<button type="submit">Enter User</button>
+</form>
